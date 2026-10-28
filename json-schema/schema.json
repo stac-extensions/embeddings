@@ -1,227 +1,343 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://stac-extensions.github.io/embeddings/v0.0.1/schema.json#",
-  "title": "Embedding Extension",
-  "description": "STAC Embedding Extension for STAC Items and STAC Collections.",
-  "oneOf": [
-    {
-      "title": "Embedding extension on STAC Items",
-      "allOf": [
-        {
-          "$ref": "https://schemas.stacspec.org/v1.0.0/item-spec/json-schema/item.json"
-        },
-        {
-          "$ref": "#/definitions/stac_extensions"
-        },
-        {
-          "type": "object",
-          "required": [
-            "type",
-            "properties",
-            "assets"
-          ],
-          "properties": {
-            "type": {
-              "const": "Feature"
-            },
-            "properties": {
-              "$ref": "#/definitions/item_properties_fields"
-            },
-            "assets": {
-              "type": "object",
-              "required": [
-                "embeddings"
-              ],
-              "additionalProperties": {
-                "$ref": "#/definitions/asset_fields"
-              }
-            }
-          }
-        }
-      ]
-    },
-    {
-      "title": "Embedding extension on STAC Collections",
-      "allOf": [
-        {
-          "$ref": "https://schemas.stacspec.org/v1.0.0/collection-spec/json-schema/collection.json"
-        },
-        {
-          "$ref": "#/definitions/stac_extensions"
-        },
-        {
-          "type": "object",
-          "required": [
-            "type",
-            "emb:type",
-            "emb:dimensions"
-          ],
-          "properties": {
-            "type": {
-              "const": "Collection"
-            },
-            "assets": {
-              "type": "object",
-              "additionalProperties": {
-                "$ref": "#/definitions/asset_fields"
-              }
-            },
-            "item_assets": {
-              "type": "object",
-              "additionalProperties": {
-                "$ref": "#/definitions/asset_fields"
-              }
-            },
-            "summaries": {
-              "$ref": "#/definitions/summaries_fields"
-            }
-          },
-          "allOf": [
-            {
-              "$ref": "#/definitions/collection_fields"
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "definitions": {
-    "stac_extensions": {
-      "type": "object",
-      "required": [
-        "stac_extensions"
-      ],
-      "properties": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://stac-extensions.github.io/embeddings/v1.0.0/schema.json#",
+    "title": "Embedding Extension",
+    "description": "STAC Embedding Extension for STAC Collections, Items and Assets.",
+    "type": "object",
+    "required": [
+        "stac_extensions",
+        "type"
+    ],
+    "properties": {
         "stac_extensions": {
-          "type": "array",
-          "contains": {
-            "const": "https://stac-extensions.github.io/embeddings/v0.0.1/schema.json"
-          }
+            "type": "array",
+            "contains": {
+                "const": "https://stac-extensions.github.io/embeddings/v1.0.0/schema.json"
+            }
+        },
+        "type": {
+            "type": "string",
+            "enum": [
+                "Collection",
+                "Feature"
+            ]
+        },
+        "assets": {
+            "$comment": "This validates the fields in Item Assets, but does not require them.",
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#/definitions/fieldsAndBands"
+            }
+        },
+        "assetTemplates": {
+            "$comment": "This validates the fields in asset templates, remove this if not applicable.",
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#/definitions/fieldsAndBands"
+            }
+        },
+        "linkTemplates": {
+            "$comment": "This validates the fields in link templates, remove this if not applicable.",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/fields"
+            }
         }
-      }
     },
-    "collection_fields": {
-      "type": "object",
-      "properties": {
-        "emb:type": {
-          "type": "string",
-          "enum": [
-            "pixel",
-            "chip"
-          ]
+    "oneOf": [
+        {
+            "$comment": "This validates the fields in the item properties, remove this if not applicable.",
+            "type": "object",
+            "required": [
+                "type",
+                "properties"
+            ],
+            "properties": {
+                "type": {
+                    "const": "Feature"
+                },
+                "properties": {
+                    "$ref": "#/definitions/fieldsAndBands"
+                }
+            },
+            "anyOf": [
+                {
+                    "$comment": "Fields in Item properties",
+                    "properties": {
+                        "properties": {
+                            "$ref": "#/definitions/require_fields"
+                        }
+                    }
+                },
+                {
+                    "$comment": "Fields in an Item asset",
+                    "required": [
+                        "assets"
+                    ],
+                    "properties": {
+                        "assets": {
+                            "type": "object",
+                            "not": {
+                                "additionalProperties": {
+                                    "not": {
+                                        "$ref": "#/definitions/require_fields"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "$comment": "This is the schema for top-level fields and item assets in STAC Collections, remove this fully or in parts if not applicable.",
+            "type": "object",
+            "required": [
+                "type"
+            ],
+            "properties": {
+                "type": {
+                    "const": "Collection"
+                },
+                "summaries": {
+                    "$ref": "#/definitions/summaries"
+                },
+                "item_assets": {
+                    "$comment": "This validates the fields in item assets, remove this if not applicable.",
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/fieldsAndBands"
+                    }
+                }
+            },
+            "allOf": [
+                {
+                    "$ref": "#/definitions/fieldsAndBands"
+                }
+            ],
+            "anyOf": [
+                {
+                    "$comment": "Top-level fields in a Collection",
+                    "$ref": "#/definitions/require_fields"
+                },
+                {
+                    "$comment": "Fields in a Collection asset",
+                    "required": [
+                        "assets"
+                    ],
+                    "properties": {
+                        "assets": {
+                            "type": "object",
+                            "not": {
+                                "additionalProperties": {
+                                    "not": {
+                                        "$ref": "#/definitions/require_fields"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "$comment": "Fields in item_assets",
+                    "required": [
+                        "item_assets"
+                    ],
+                    "properties": {
+                        "item_assets": {
+                            "type": "object",
+                            "not": {
+                                "additionalProperties": {
+                                    "not": {
+                                        "$ref": "#/definitions/require_fields"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    "definitions": {
+        "emb:stride": {
+            "type": "array",
+            "items": {
+                "type": "integer",
+                "minimum": 1
+            },
+            "minItems": 2,
+            "maxItems": 2
+        },
+        "emb:chip_size": {
+            "type": "array",
+            "items": {
+                "type": "integer",
+                "minimum": 1
+            },
+            "minItems": 2,
+            "maxItems": 2
         },
         "emb:dimensions": {
-          "type": "array",
-          "items": {
-            "type": "integer",
-            "minimum": 1
-          },
-          "minItems": 1
+            "type": "array",
+            "items": {
+                "type": "integer",
+                "minimum": 1
+            },
+            "minItems": 1
         },
-        "emb:chip_size": {
-          "type": "array",
-          "items": {
-            "type": "integer",
-            "minimum": 1
-          },
-          "minItems": 2,
-          "maxItems": 2
-        },
-        "emb:stride": {
-          "type": "array",
-          "items": {
-            "type": "integer",
-            "minimum": 1
-          },
-          "minItems": 2,
-          "maxItems": 2
+        "emb:type": {
+            "type": "string",
+            "enum": [
+                "pixel",
+                "chip"
+            ]
         },
         "emb:grid_id": {
-          "type": "string"
+            "type": "string"
         },
         "emb:temporal_period": {
-          "type": "string",
-          "pattern": "^P(?!$)(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?(T(?=\\d)(\\d+H)?(\\d+M)?(\\d+(\\.\\d+)?S)?)?$"
+            "type": "string",
+            "pattern": "^P(?!$)(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?(T(?=\\d)(\\d+H)?(\\d+M)?(\\d+(\\.\\d+)?S)?)?$"
         },
         "emb:quantization_method": {
-          "type": "string"
+            "type": "string"
         },
         "emb:original_data_type": {
-          "type": "string"
+            "type": "string",
+            "enum": [
+                "int8",
+                "int16",
+                "int32",
+                "int64",
+                "uint8",
+                "uint16",
+                "uint32",
+                "uint64",
+                "float16",
+                "float32",
+                "float64",
+                "cint16",
+                "cint32",
+                "cfloat32",
+                "cfloat64"
+            ]
+        },
+        "fields": {
+            "$comment": "Add your new fields here. Don't require them here as they would be required in all places where we reference the fields as possibly allowed.",
+            "type": "object",
+            "properties": {
+                "emb:stride": {
+                    "$ref": "#/definitions/emb:stride"
+                },
+                "emb:chip_size": {
+                    "$ref": "#/definitions/emb:chip_size"
+                },
+                "emb:dimensions": {
+                    "$ref": "#/definitions/emb:dimensions"
+                },
+                "emb:type": {
+                    "$ref": "#/definitions/emb:type"
+                },
+                "emb:grid_id": {
+                    "$ref": "#/definitions/emb:grid_id"
+                },
+                "emb:temporal_period": {
+                    "$ref": "#/definitions/emb:temporal_period"
+                },
+                "emb:quantization_method": {
+                    "$ref": "#/definitions/emb:quantization_method"
+                },
+                "emb:original_data_type": {
+                    "$ref": "#/definitions/emb:original_data_type"
+                }
+            },
+            "patternProperties": {
+                "^(?!emb:)": {}
+            },
+            "additionalProperties": false
+        },
+        "fieldsAndBands": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/fields"
+                },
+                {
+                    "properties": {
+                        "bands": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/fields"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "summaries": {
+            "$comment": "These are examples summaries that allows lists, ranges and JSON schemas, depending on how it makes sense for the individual data types of the fields. Validation only works for lists and ranges. JSON Schema (type: object) can always be provided for fields, but the corresponding schema for lists (type: array and items) and ranges (properties) should only be provided if it actually makes sense.",
+            "type": "object",
+            "properties": {
+                "emb:stride": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/emb:stride"
+                    }
+                },
+                "emb:chip_size": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/emb:chip_size"
+                    }
+                },
+                "emb:dimensions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/emb:dimensions"
+                    }
+                },
+                "emb:type": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/emb:type"
+                    }
+                },
+                "emb:grid_id": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/emb:grid_id"
+                    }
+                },
+                "emb:temporal_period": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/emb:temporal_period"
+                    }
+                },
+                "emb:quantization_method": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/emb:quantization_method"
+                    }
+                },
+                "emb:original_data_type": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/emb:original_data_type"
+                    }
+                }
+            },
+            "patternProperties": {
+                "^(?!emb:)": {}
+            },
+            "additionalProperties": false
+        },
+        "require_fields": {
+            "$comment": "emb:type and emb:dimensions are required wherever the extension is used.",
+            "required": [
+                "emb:type",
+                "emb:dimensions"
+            ]
         }
-      },
-      "patternProperties": {
-        "^(?!emb:)": {}
-      },
-      "additionalProperties": false
-    },
-    "item_properties_fields": {
-      "type": "object",
-      "properties": {
-        "emb:spatial_coverage": {
-          "type": "string"
-        },
-        "emb:chip_size": {
-          "type": "array",
-          "items": {
-            "type": "integer",
-            "minimum": 1
-          },
-          "minItems": 2,
-          "maxItems": 2
-        },
-        "emb:stride": {
-          "type": "array",
-          "items": {
-            "type": "integer",
-            "minimum": 1
-          },
-          "minItems": 2,
-          "maxItems": 2
-        },
-        "emb:grid_id": {
-          "type": "string"
-        },
-        "emb:temporal_period": {
-          "type": "string",
-          "pattern": "^P(?!$)(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?(T(?=\\d)(\\d+H)?(\\d+M)?(\\d+(\\.\\d+)?S)?)?$"
-        },
-        "emb:quantization_method": {
-          "type": "string"
-        },
-        "emb:original_data_type": {
-          "type": "string"
-        }
-      },
-      "patternProperties": {
-        "^(?!emb:)": {}
-      },
-      "additionalProperties": false
-    },
-    "asset_fields": {
-      "type": "object",
-      "properties": {},
-      "patternProperties": {
-        "^(?!emb:)": {}
-      },
-      "additionalProperties": false
-    },
-    "summaries_fields": {
-      "type": "object",
-      "properties": {
-        "emb:type": {},
-        "emb:dimensions": {},
-        "emb:chip_size": {},
-        "emb:stride": {},
-        "emb:grid_id": {},
-        "emb:temporal_period": {},
-        "emb:quantization_method": {},
-        "emb:original_data_type": {}
-      },
-      "patternProperties": {
-        "^(?!emb:)": {}
-      },
-      "additionalProperties": false
     }
-  }
 }
