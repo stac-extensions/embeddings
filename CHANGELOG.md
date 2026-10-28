@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Embedding-focused Item and Collection examples covering required `emb:model` and `emb:source-data` relations.
 
 ### Changed
+- Replaced `requirements.md` with `best-practices.md`, removing outdated content.
 - Collapsed field tables into a single table.
 - Renamed relation types `emb:model` and `emb:decoder` to `emb:encoder_model` and `emb:decoder_model`. No relation types are required.
 - Added `emb:grid` and `emb:quantization` relation types, replacing link objects inside the chip layout and quantization objects.
