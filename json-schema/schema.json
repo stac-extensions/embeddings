@@ -16,10 +16,8 @@
             }
         },
         "type": {
-            "$comment": "List the allowed STAC object types here, any of: Catalog, Collection, Feature (for Items)",
             "type": "string",
             "enum": [
-                "Catalog",
                 "Collection",
                 "Feature"
             ]
@@ -157,23 +155,6 @@
                             }
                         }
                     }
-                }
-            ]
-        },
-        {
-            "$comment": "This is the schema for top-level fields in STAC Catalogs, remove this fully or in parts if not applicable.",
-            "type": "object",
-            "required": [
-                "type"
-            ],
-            "properties": {
-                "type": {
-                    "const": "Catalog"
-                }
-            },
-            "allOf": [
-                {
-                    "$ref": "#/definitions/fields"
                 }
             ]
         }
