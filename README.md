@@ -14,6 +14,7 @@ It describes the produced embeddings and run metadata and does not redefine STAC
   - [Item example](examples/item.json): Item-level runtime and provenance metadata
   - [Collection example](examples/collection.json): Collection-level embedding metadata and relation links
 - [JSON Schema](json-schema/schema.json)
+- [Best Practices](best-practices.md)
 - [Changelog](CHANGELOG.md)
 
 ## Related Specifications and Schemas
@@ -28,22 +29,9 @@ It describes the produced embeddings and run metadata and does not redefine STAC
 - STAC Scientific Extension: <https://github.com/stac-extensions/scientific>
 - STAC Projection Extension: <https://github.com/stac-extensions/projection>
 
-## Reuse of Existing STAC Extensions
+## Best Practices
 
-This extension reuses fields from existing STAC extensions and common metadata where possible,
-adding only `emb:*` fields for concepts specific to embedding products:
-
-- **[Processing Extension](https://github.com/stac-extensions/processing):** `processing:datetime` and
-  `processing:version` are used for inference timestamp and source processing baseline.
-  `emb:preprocessing` and `emb:postprocessing` reference the Processing extension's Expression Object format.
-- **[Scientific Extension](https://github.com/stac-extensions/scientific):** `sci:publications` is used
-  for citing papers related to the embedding model or dataset.
-- **[STAC Common Metadata](https://github.com/radiantearth/stac-spec/blob/master/commons/common-metadata.md):**
-  `data_type` and `gsd` are used for embedding data type and spatial resolution.
-
-Core STAC elements such as Item/Collection structure, Link Object, Asset Object, Extent,
-and shared metadata (`description`, `license`, etc.) are validated by STAC core schemas
-and must not be redefined in this extension.
+See [Best Practices](best-practices.md) for recommendations, including related extensions to use alongside this one.
 
 ## Fields
 
