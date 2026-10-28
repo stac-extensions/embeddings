@@ -33,6 +33,9 @@ Africa is \~38-77 TB; a `chip` product for the same area can be under 4 GB.
 Always provide [`data_type`](https://github.com/radiantearth/stac-spec/blob/master/commons/common-metadata.md#data-types)
 for the stored embeddings (e.g. `float32`, `int8`), so that users can read them without inspecting the data.
 
+Use [`gsd`](https://github.com/radiantearth/stac-spec/blob/master/commons/common-metadata.md#gsd) for the ground
+sample distance or spatial extent per embedding, in meters.
+
 ## Related extensions
 
 Consider using these extensions alongside this one:

@@ -47,11 +47,6 @@
     "grid_id": "major-tom-v1"
   },
   "emb:temporal_resolution": "single_acquisition",
-  "emb:fit_for_use": [
-    "retrieval",
-    "classification",
-    "change_detection"
-  ],
   "links": [
     {
       "rel": "self",
@@ -117,11 +112,6 @@
     ],
     "data_type": [
       "float32"
-    ],
-    "emb:fit_for_use": [
-      "retrieval",
-      "classification",
-      "change_detection"
     ]
   }
 }
