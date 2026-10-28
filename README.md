@@ -140,18 +140,6 @@ Consider using these extensions alongside this one:
   `sci:publications` for papers describing the model or embedding product
 - [Projection Extension](https://github.com/stac-extensions/projection): CRS and geometry of pixel embeddings
 
-### Uncertainty
-
-Companion uncertainty data should be provided as a STAC Asset with the role `uncertainty`.
-
-### Storage formats
-
-- **Chip embeddings** are best stored in **GeoParquet**, with one geometry and one embedding array per row.
-- **Pixel embeddings** are best stored in **COG** or **Zarr**, with embedding dimensions as bands or array variables.
-- **Embed the CRS in every data file**, not only in STAC metadata or external documentation.
-  Implicit CRS assumptions are a major source of integration bugs.
-- **Use cloud-native formats** (COG, GeoParquet, GeoZarr) to allow efficient range-request access without full downloads.
-
 ## Contributing
 
 All contributions are subject to the
