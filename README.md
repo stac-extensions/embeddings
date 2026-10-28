@@ -1,6 +1,6 @@
 # STAC Embedding Extension Specification
 
-- **Title:** Embedding
+- **Title:** Embeddings
 - **Identifier:** <https://stac-extensions.github.io/embeddings/v1.0.0/schema.json>
 - **Field Name Prefix:** emb
 - **Scope:** Item, Collection
