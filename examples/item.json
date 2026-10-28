@@ -44,17 +44,9 @@
     "datetime": "2024-05-01T10:32:45Z",
     "processing:datetime": "2025-01-10T11:22:33Z",
     "processing:version": "sentinel-2-l2a-pb05",
-    "emb:quantization": {
-      "method": "linear",
-      "original_dtype": "float32",
-      "quantized_dtype": "int8",
-      "scale": [
-        0.02
-      ],
-      "offset": [
-        -1.2
-      ]
-    }
+    "data_type": "int8",
+    "emb:quantization_method": "linear",
+    "emb:original_data_type": "float32"
   },
   "links": [
     {

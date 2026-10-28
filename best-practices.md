@@ -36,6 +36,10 @@ for the stored embeddings (e.g. `float32`, `int8`), so that users can read them 
 Use [`gsd`](https://github.com/radiantearth/stac-spec/blob/master/commons/common-metadata.md#gsd) for the ground
 sample distance or spatial extent per embedding, in meters.
 
+For quantized embeddings, `data_type` is the stored (quantized) type. Use `emb:original_data_type` for the type
+before quantization, and the [Raster Extension](https://github.com/stac-extensions/raster) `raster:scale` and
+`raster:offset` fields for dequantization.
+
 ## Related extensions
 
 Consider using these extensions alongside this one:
