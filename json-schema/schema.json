@@ -31,7 +31,6 @@
                 "$ref": "#/definitions/fieldsAndBands"
             }
         },
-
         "assetTemplates": {
             "$comment": "This validates the fields in asset templates, remove this if not applicable.",
             "type": "object",
@@ -62,7 +61,35 @@
                 "properties": {
                     "$ref": "#/definitions/fieldsAndBands"
                 }
-            }
+            },
+            "anyOf": [
+                {
+                    "$comment": "Fields in Item properties",
+                    "properties": {
+                        "properties": {
+                            "$ref": "#/definitions/require_fields"
+                        }
+                    }
+                },
+                {
+                    "$comment": "Fields in an Item asset",
+                    "required": [
+                        "assets"
+                    ],
+                    "properties": {
+                        "assets": {
+                            "type": "object",
+                            "not": {
+                                "additionalProperties": {
+                                    "not": {
+                                        "$ref": "#/definitions/require_fields"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
         },
         {
             "$comment": "This is the schema for top-level fields and item assets in STAC Collections, remove this fully or in parts if not applicable.",
@@ -88,6 +115,48 @@
             "allOf": [
                 {
                     "$ref": "#/definitions/fieldsAndBands"
+                }
+            ],
+            "anyOf": [
+                {
+                    "$comment": "Top-level fields in a Collection",
+                    "$ref": "#/definitions/require_fields"
+                },
+                {
+                    "$comment": "Fields in a Collection asset",
+                    "required": [
+                        "assets"
+                    ],
+                    "properties": {
+                        "assets": {
+                            "type": "object",
+                            "not": {
+                                "additionalProperties": {
+                                    "not": {
+                                        "$ref": "#/definitions/require_fields"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "$comment": "Fields in item_assets",
+                    "required": [
+                        "item_assets"
+                    ],
+                    "properties": {
+                        "item_assets": {
+                            "type": "object",
+                            "not": {
+                                "additionalProperties": {
+                                    "not": {
+                                        "$ref": "#/definitions/require_fields"
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             ]
         },
@@ -227,36 +296,67 @@
         "summaries": {
             "$comment": "These are examples summaries that allows lists, ranges and JSON schemas, depending on how it makes sense for the individual data types of the fields. Validation only works for lists and ranges. JSON Schema (type: object) can always be provided for fields, but the corresponding schema for lists (type: array and items) and ranges (properties) should only be provided if it actually makes sense.",
             "type": "object",
-            "properties": {                
+            "properties": {
                 "emb:stride": {
-                    "$ref": "#/definitions/emb:stride"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/emb:stride"
+                    }
                 },
                 "emb:chip_size": {
-                    "$ref": "#/definitions/emb:chip_size"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/emb:chip_size"
+                    }
                 },
                 "emb:dimensions": {
-                    "$ref": "#/definitions/emb:dimensions"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/emb:dimensions"
+                    }
                 },
                 "emb:type": {
-                    "$ref": "#/definitions/emb:type"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/emb:type"
+                    }
                 },
                 "emb:grid_id": {
-                    "$ref": "#/definitions/emb:grid_id"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/emb:grid_id"
+                    }
                 },
                 "emb:temporal_period": {
-                    "$ref": "#/definitions/emb:temporal_period"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/emb:temporal_period"
+                    }
                 },
                 "emb:quantization_method": {
-                    "$ref": "#/definitions/emb:quantization_method"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/emb:quantization_method"
+                    }
                 },
                 "emb:original_data_type": {
-                    "$ref": "#/definitions/emb:original_data_type"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/emb:original_data_type"
+                    }
                 }
             },
             "patternProperties": {
                 "^(?!emb:)": {}
             },
             "additionalProperties": false
+        },
+        "require_fields": {
+            "$comment": "emb:type and emb:dimensions are required wherever the extension is used.",
+            "required": [
+                "emb:type",
+                "emb:dimensions"
+            ]
         }
     }
 }
