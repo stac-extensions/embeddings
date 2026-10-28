@@ -150,10 +150,7 @@
           "type": "string"
         }
       },
-      "patternProperties": {
-        "^(?!emb:)": {}
-      },
-      "additionalProperties": false
+      "additionalProperties": true
     },
     "item_properties_fields": {
       "type": "object",
@@ -193,18 +190,12 @@
           "type": "string"
         }
       },
-      "patternProperties": {
-        "^(?!emb:)": {}
-      },
-      "additionalProperties": false
+      "additionalProperties": true
     },
     "asset_fields": {
       "type": "object",
       "properties": {},
-      "patternProperties": {
-        "^(?!emb:)": {}
-      },
-      "additionalProperties": false
+      "additionalProperties": true
     },
     "summaries_fields": {
       "type": "object",
@@ -218,10 +209,8 @@
         "emb:quantization_method": {},
         "emb:original_data_type": {}
       },
-      "patternProperties": {
-        "^(?!emb:)": {}
-      },
-      "additionalProperties": false
+      
+      "additionalProperties": true
     }
   }
 }
