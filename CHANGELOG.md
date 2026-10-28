@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+## [v1.0.0] - TBD
+
+### Added
+
 - Embedding extension schema definitions for collection, item properties, asset fields, and extension-specific objects
   (`patch_layout`, `quantization`, `uncertainty`).
 - Embedding-focused Item and Collection examples covering required `emb:model` and `emb:source-data` relations.
@@ -43,4 +55,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Example JSON formatting for validator lint compliance.
 
-[Unreleased]: <https://github.com/stac-extensions/embeddings/compare/v0.0.1...HEAD>
+[Unreleased]: <https://github.com/stac-extensions/embeddings/compare/v1.0.0...HEAD>
+[v1.0.0]: <https://github.com/stac-extensions/embeddings/compare/v0.0.1...v1.0.0>
