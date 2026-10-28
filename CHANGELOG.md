@@ -33,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Renamed `emb:temporal_resolution` to `emb:temporal_period`, using ISO 8601 durations.
 - Changed `emb:dimensions` from an integer to an array of integers (e.g. `[768]`).
 - Updated to the latest [stac-extensions/template](https://github.com/stac-extensions/template).
-- Replaced `requirements.md` with `best-practices.md`, removing outdated content.
+- Moved best practices from `requirements.md` into the README, removing outdated content.
 - Collapsed field tables into a single table.
 - Renamed relation types `emb:model` and `emb:decoder` to `emb:encoder_model` and `emb:decoder_model`. No relation types are required.
 - Added `emb:grid` and `emb:quantization` relation types, replacing link objects inside the chip layout and quantization objects.
