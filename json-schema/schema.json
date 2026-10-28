@@ -29,9 +29,24 @@
             },
             "assets": {
               "type": "object",
-              "required": [
-                "embeddings"
-              ],
+              "not": {
+                "additionalProperties": {
+                  "not": {
+                    "type": "object",
+                    "required": [
+                      "roles"
+                    ],
+                    "properties": {
+                      "roles": {
+                        "type": "array",
+                        "contains": {
+                          "const": "embeddings"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
               "additionalProperties": {
                 "$ref": "#/definitions/asset_fields"
               }

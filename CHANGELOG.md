@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Embeddings assets are identified by the `embeddings` role instead of the `embeddings` asset key.
 - Replaced `emb:chip_layout` with `emb:chip_size`, `emb:stride`, and `emb:grid_id`. `emb:grid_id` uses Grid Extension designations.
 - Replaced `emb:quantization` with `emb:quantization_method` and `emb:original_data_type`.
 - Renamed `emb:temporal_resolution` to `emb:temporal_period`, using ISO 8601 durations.
