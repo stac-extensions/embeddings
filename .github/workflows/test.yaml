@@ -4,10 +4,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v6
         with:
           node-version: 'lts/*'
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: |
           npm install
           npm test
