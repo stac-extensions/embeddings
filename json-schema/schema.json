@@ -54,8 +54,7 @@
           "required": [
             "type",
             "emb:type",
-            "emb:dimensions",
-            "data_type"
+            "emb:dimensions"
           ],
           "properties": {
             "type": {
@@ -100,9 +99,6 @@
           }
         }
       }
-    },
-    "processing_expression": {
-      "$ref": "https://stac-extensions.github.io/processing/v1.2.0/schema.json#/definitions/fields/properties/processing:expression"
     },
     "chip_layout": {
       "type": "object",
@@ -170,54 +166,7 @@
             "type": "number"
           }
         },
-        "quantized_dtype" : {
-          "type": "string"
-        }
-      },
-      "additionalProperties": false
-    },
-    "energy": {
-      "type": "object",
-      "properties": {
-        "device_type": {
-          "type": "string",
-          "enum": ["cpu", "gpu"]
-        },
-        "energy_kwh": {
-          "type": "number",
-          "minimum": 0
-        },
-        "inference_duration_s": {
-          "type": "number",
-          "minimum": 0
-        },
-        "avg_power_w": {
-          "type": "number",
-          "minimum": 0
-        },
-        "max_power_w": {
-          "type": "number",
-          "minimum": 0
-        },
-        "name": {
-          "type": "string"
-        },
-        "instance_type": {
-          "type": ["string", "null"]
-        },
-        "platform": {
-          "type": ["string", "null"]
-        }
-      },
-      "additionalProperties": false
-    },
-    "uncertainty": {
-      "type": "object",
-      "properties": {
-        "method": {
-          "type": "string"
-        },
-        "description": {
+        "quantized_dtype": {
           "type": "string"
         }
       },
@@ -237,26 +186,11 @@
           "type": "integer",
           "minimum": 1
         },
-        "data_type": {
-          "type": "string"
-        },
-        "gsd": {
-          "type": "number"
-        },
         "emb:chip_layout": {
           "$ref": "#/definitions/chip_layout"
         },
         "emb:temporal_resolution": {
           "type": "string"
-        },
-        "emb:fit_for_use": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "emb:uncertainty": {
-          "$ref": "#/definitions/uncertainty"
         }
       },
       "patternProperties": {
@@ -267,32 +201,11 @@
     "item_properties_fields": {
       "type": "object",
       "properties": {
-        "emb:runtime_parameters": {
-          "type": "object"
-        },
-        "emb:preprocessing": {
-          "$ref": "#/definitions/processing_expression"
-        },
-        "emb:postprocessing": {
-          "$ref": "#/definitions/processing_expression"
-        },
-        "emb:fit_for_use": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
         "emb:spatial_coverage": {
           "type": "string"
         },
-        "emb:uncertainty": {
-          "$ref": "#/definitions/uncertainty"
-        },
         "emb:quantization": {
           "$ref": "#/definitions/quantization"
-        },
-        "emb:energy": {
-          "$ref": "#/definitions/energy"
         }
       },
       "patternProperties": {
@@ -313,11 +226,7 @@
       "properties": {
         "emb:type": {},
         "emb:dimensions": {},
-        "data_type": {},
-        "gsd": {},
-        "emb:temporal_resolution": {},
-        "emb:fit_for_use": {},
-        "emb:uncertainty": {}
+        "emb:temporal_resolution": {}
       },
       "patternProperties": {
         "^(?!emb:)": {}

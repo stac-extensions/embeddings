@@ -28,6 +28,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+- `data_type` and `gsd` from the fields table; `data_type` is no longer required.
+- `sci:publications`, `processing:datetime`, and `processing:version` from the fields table (see best practices).
+- `emb:fit_for_use`, `emb:runtime_parameters`, `emb:preprocessing`, `emb:postprocessing`, `emb:energy`, and `emb:uncertainty`.
 - `emb:source-data` relation type, in favor of `derived_from`.
 - Template-specific field definitions and documentation (`template:*`).
 
