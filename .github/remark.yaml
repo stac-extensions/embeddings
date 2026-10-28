@@ -10,7 +10,8 @@ plugins:
 # General formatting
   - - remark-lint-emphasis-marker
     - '*'
-  - remark-lint-no-undefined-references
+  - - remark-lint-no-undefined-references
+    - allow: ['!IMPORTANT', '!WARNING', '!NOTE', '!CAUTION', '!TIP']
   - remark-lint-hard-break-spaces
   - remark-lint-blockquote-indentation
   - remark-lint-no-consecutive-blank-lines
@@ -40,7 +41,7 @@ plugins:
   - - remark-lint-unordered-list-marker-style
     - '-'
   - - remark-lint-list-item-indent
-    - space
+    - one
 # Tables
   - remark-lint-table-pipes
   - remark-lint-no-literal-urls
