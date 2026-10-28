@@ -57,10 +57,10 @@ The fields in the table below can be used in these parts of STAC documents:
 
 ### Embeddings Asset
 
-Items **MUST** include an asset with the key `"embeddings"` in their `assets` object.
+Items **MUST** include at least one asset with the role `embeddings`.
 This asset contains the actual embedding data (e.g., a GeoParquet file, COG, or Zarr store).
-Collections **SHOULD** define an `"embeddings"` entry in `item_assets` to describe the expected
-embedding asset for each item.
+An Item may have multiple `embeddings` assets.
+Collections **SHOULD** describe the expected embeddings assets in `item_assets`.
 
 ### Grid IDs
 

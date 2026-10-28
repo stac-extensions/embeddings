@@ -96,7 +96,8 @@
     "embeddings": {
       "type": "application/vnd.apache.parquet",
       "roles": [
-        "data"
+        "data",
+        "embeddings"
       ],
       "title": "Chip embedding vectors"
     }

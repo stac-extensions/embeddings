@@ -79,7 +79,8 @@
       "href": "https://example.org/data/embeddings/tile-12txm-2024-05-01.parquet",
       "type": "application/vnd.apache.parquet",
       "roles": [
-        "data"
+        "data",
+        "embeddings"
       ]
     }
   }
