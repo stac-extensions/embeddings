@@ -32,21 +32,17 @@
   },
   "emb:type": "chip",
   "emb:dimensions": 768,
-  "data_type": "float32",
+  "data_type": "int8",
   "gsd": 10,
-  "emb:chip_layout": {
-    "layout_type": "regular_grid",
-    "chip_size": [
-      16,
-      16
-    ],
-    "stride": [
-      16,
-      16
-    ],
-    "grid_id": "major-tom-v1"
-  },
-  "emb:temporal_resolution": "single_acquisition",
+  "emb:chip_size": [
+    16,
+    16
+  ],
+  "emb:stride": [
+    16,
+    16
+  ],
+  "emb:grid_id": "MAJORTOM",
   "links": [
     {
       "rel": "self",

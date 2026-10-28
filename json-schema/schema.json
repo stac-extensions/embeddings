@@ -100,78 +100,6 @@
         }
       }
     },
-    "chip_layout": {
-      "type": "object",
-      "required": [
-        "layout_type"
-      ],
-      "properties": {
-        "layout_type": {
-          "type": "string",
-          "enum": [
-            "regular_grid",
-            "variable_grid",
-            "named_grid"
-          ]
-        },
-        "chip_size": {
-          "type": "array",
-          "items": {
-            "type": "integer",
-            "minimum": 1
-          },
-          "minItems": 2,
-          "maxItems": 2
-        },
-        "stride": {
-          "type": "array",
-          "items": {
-            "type": "integer",
-            "minimum": 1
-          },
-          "minItems": 2,
-          "maxItems": 2
-        },
-        "grid_id": {
-          "type": "string"
-        }
-      },
-      "patternProperties": {
-        "^(?!emb:)": {}
-      },
-      "additionalProperties": false
-    },
-    "quantization": {
-      "type": "object",
-      "required": [
-        "method",
-        "original_dtype"
-      ],
-      "properties": {
-        "method": {
-          "type": "string"
-        },
-        "original_dtype": {
-          "type": "string"
-        },
-        "scale": {
-          "type": "array",
-          "items": {
-            "type": "number"
-          }
-        },
-        "offset": {
-          "type": "array",
-          "items": {
-            "type": "number"
-          }
-        },
-        "quantized_dtype": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": false
-    },
     "collection_fields": {
       "type": "object",
       "properties": {
@@ -186,10 +114,35 @@
           "type": "integer",
           "minimum": 1
         },
-        "emb:chip_layout": {
-          "$ref": "#/definitions/chip_layout"
+        "emb:chip_size": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "minItems": 2,
+          "maxItems": 2
         },
-        "emb:temporal_resolution": {
+        "emb:stride": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "emb:grid_id": {
+          "type": "string"
+        },
+        "emb:temporal_period": {
+          "type": "string",
+          "pattern": "^P(?!$)(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?(T(?=\\d)(\\d+H)?(\\d+M)?(\\d+(\\.\\d+)?S)?)?$"
+        },
+        "emb:quantization_method": {
+          "type": "string"
+        },
+        "emb:original_data_type": {
           "type": "string"
         }
       },
@@ -204,8 +157,36 @@
         "emb:spatial_coverage": {
           "type": "string"
         },
-        "emb:quantization": {
-          "$ref": "#/definitions/quantization"
+        "emb:chip_size": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "emb:stride": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "emb:grid_id": {
+          "type": "string"
+        },
+        "emb:temporal_period": {
+          "type": "string",
+          "pattern": "^P(?!$)(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?(T(?=\\d)(\\d+H)?(\\d+M)?(\\d+(\\.\\d+)?S)?)?$"
+        },
+        "emb:quantization_method": {
+          "type": "string"
+        },
+        "emb:original_data_type": {
+          "type": "string"
         }
       },
       "patternProperties": {
@@ -226,7 +207,12 @@
       "properties": {
         "emb:type": {},
         "emb:dimensions": {},
-        "emb:temporal_resolution": {}
+        "emb:chip_size": {},
+        "emb:stride": {},
+        "emb:grid_id": {},
+        "emb:temporal_period": {},
+        "emb:quantization_method": {},
+        "emb:original_data_type": {}
       },
       "patternProperties": {
         "^(?!emb:)": {}

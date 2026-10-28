@@ -48,9 +48,12 @@ The fields in the table below can be used in these parts of STAC documents:
 | --- | --- | --- |
 | emb:type | string enum | **REQUIRED**. Embedding type: `pixel` or `chip`. |
 | emb:dimensions | integer | **REQUIRED**. Number of embedding dimensions (for example, 64, 128, 768, 1024). |
-| emb:chip_layout | [Chip Layout Object](#chip-layout-object) | Chip extraction layout for chip embeddings. |
-| emb:temporal_resolution | string | Temporal compositing window. |
-| emb:quantization | [Quantization Object](#quantization-object) | Quantization details for encoded embeddings. |
+| emb:chip_size | \[integer] | Chip size in pixels as `[height, width]`. |
+| emb:stride | \[integer] | Step between the origins of neighboring chips in pixels as `[row_stride, col_stride]`. When `stride < chip_size`, chips overlap. |
+| emb:grid_id | string | Grid system the chips are aligned to. See [Grid IDs](#grid-ids). |
+| emb:temporal_period | string | Temporal compositing period as an [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601#Durations) (e.g. `P1Y`, `P3M`). |
+| emb:quantization_method | string | Quantization method (e.g. `linear`). |
+| emb:original_data_type | string | Data type before quantization. Uses the same [data type values](https://github.com/radiantearth/stac-spec/blob/master/commons/common-metadata.md#data-types) as `data_type`. |
 
 ### Embeddings Asset
 
@@ -59,24 +62,27 @@ This asset contains the actual embedding data (e.g., a GeoParquet file, COG, or 
 Collections **SHOULD** define an `"embeddings"` entry in `item_assets` to describe the expected
 embedding asset for each item.
 
-### Chip Layout Object
+### Grid IDs
 
-| Field Name | Type | Description |
-| --- | --- | --- |
-| layout_type | string enum | **REQUIRED**. One of `regular_grid`, `variable_grid`, `named_grid`. |
-| chip_size | \[integer] | Chip size in pixels as `[height, width]`. |
-| stride | \[integer] | Step between the origins of neighboring chips in pixels as `[row_stride, col_stride]`. When `stride < chip_size`, chips overlap; when `stride == chip_size`, chips tile without overlap. |
-| grid_id | string | Identifier of the tiling/grid system. A link to the grid definition can be provided with the `emb:grid` relation type. |
+`emb:grid_id` should use one of the grid designations from the [Grid Extension](https://github.com/stac-extensions/grid).
+A link to the grid definition can be provided with the `emb:grid` relation type.
 
-### Quantization Object
-
-| Field Name | Type | Description |
-| --- | --- | --- |
-| method | string | **REQUIRED**. Quantization method. |
-| original_dtype | string | **REQUIRED**. Original data type before quantization. Uses the same [data type values](https://github.com/radiantearth/stac-spec/blob/master/commons/common-metadata.md#data-types) as `data_type`. |
-| quantized_dtype | string | Data type after quantization. Uses the same [data type values](https://github.com/radiantearth/stac-spec/blob/master/commons/common-metadata.md#data-types) as `data_type`. |
-| scale | \[number] | Dequantization scale factor(s). |
-| offset | \[number] | Dequantization offset(s). |
+| Grid ID     | Grid                                  |
+| ----------- | ------------------------------------- |
+| `MGRS`      | Military Grid Reference System        |
+| `MSIN`      | MODIS Sinusoidal Tile Grid            |
+| `WRS1`      | Worldwide Reference System 1          |
+| `WRS2`      | Worldwide Reference System 2          |
+| `DOQ`       | Digital Orthophoto Quadrangle         |
+| `DOQQ`      | Digital Orthophoto Quarter Quadrangle |
+| `MXRA`      | Maxar ARD Tile Grid                   |
+| `EASE-DGGS` | EASE-DGGS                             |
+| `CDEM`      | Copernicus DEM Grid                   |
+| `EEA`       | EEA Reference Grid                    |
+| `MAJORTOM`  | Major TOM Grid                        |
+| `ADV`       | AdV Tile Grid                         |
+| `SPOTGRS`   | SPOT Reference Grid                   |
+| `PLQ`       | Planet Mosaic Quad Grid               |
 
 ## Relation types
 
@@ -89,7 +95,8 @@ The following types may be used as applicable `rel` types in the
 | emb:decoder_model | Link to a decoder model, if one exists. |
 | emb:benchmark | Link to benchmark/evaluation resources. |
 | emb:grid | Link to the grid/tiling definition used for chip embeddings. |
-| emb:quantization | Link to a document describing the quantization method. |
+| emb:quantization_method | string | Quantization method (e.g. `linear`). |
+| emb:original_data_type | string | Data type before quantization. Uses the same [data type values](https://github.com/radiantearth/stac-spec/blob/master/commons/common-metadata.md#data-types) as `data_type`. |
 
 Source data used to produce the embeddings SHOULD be linked with the `derived_from` relation type.
 
