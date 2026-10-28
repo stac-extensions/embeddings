@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Replaced `emb:chip_layout` with `emb:chip_size`, `emb:stride`, and `emb:grid_id`. `emb:grid_id` uses Grid Extension designations.
 - Replaced `emb:quantization` with `emb:quantization_method` and `emb:original_data_type`.
 - Renamed `emb:temporal_resolution` to `emb:temporal_period`, using ISO 8601 durations.
+- Changed `emb:dimensions` from an integer to an array of integers (e.g. `[768]`).
 - Updated to the latest [stac-extensions/template](https://github.com/stac-extensions/template).
 - Replaced `requirements.md` with `best-practices.md`, removing outdated content.
 - Collapsed field tables into a single table.

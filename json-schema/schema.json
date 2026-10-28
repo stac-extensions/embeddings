@@ -111,8 +111,12 @@
           ]
         },
         "emb:dimensions": {
-          "type": "integer",
-          "minimum": 1
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "minItems": 1
         },
         "emb:chip_size": {
           "type": "array",

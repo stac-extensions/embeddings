@@ -47,7 +47,7 @@ The fields in the table below can be used in these parts of STAC documents:
 | Field Name | Type | Description |
 | --- | --- | --- |
 | emb:type | string enum | **REQUIRED**. Embedding type: `pixel` or `chip`. |
-| emb:dimensions | integer | **REQUIRED**. Number of embedding dimensions (for example, 64, 128, 768, 1024). |
+| emb:dimensions | \[integer] | **REQUIRED**. Embedding dimensions as an array of sizes, e.g. `[768]` for a single 768-dimensional vector. |
 | emb:chip_size | \[integer] | Chip size in pixels as `[height, width]`. |
 | emb:stride | \[integer] | Step between the origins of neighboring chips in pixels as `[row_stride, col_stride]`. When `stride < chip_size`, chips overlap. |
 | emb:grid_id | string | Grid system the chips are aligned to. See [Grid IDs](#grid-ids). |

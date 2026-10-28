@@ -31,7 +31,9 @@
     }
   },
   "emb:type": "chip",
-  "emb:dimensions": 768,
+  "emb:dimensions": [
+    768
+  ],
   "data_type": "int8",
   "gsd": 10,
   "emb:chip_size": [
@@ -104,7 +106,9 @@
       "chip"
     ],
     "emb:dimensions": [
-      768
+      [
+        768
+      ]
     ],
     "data_type": [
       "float32"
