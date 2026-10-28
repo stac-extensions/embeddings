@@ -95,8 +95,7 @@ The following types may be used as applicable `rel` types in the
 | emb:decoder_model | Link to a decoder model, if one exists. |
 | emb:benchmark | Link to benchmark/evaluation resources. |
 | emb:grid | Link to the grid/tiling definition used for chip embeddings. |
-| emb:quantization_method | string | Quantization method (e.g. `linear`). |
-| emb:original_data_type | string | Data type before quantization. Uses the same [data type values](https://github.com/radiantearth/stac-spec/blob/master/commons/common-metadata.md#data-types) as `data_type`. |
+| emb:quantization | Link to a document describing the quantization method. |
 
 Source data used to produce the embeddings SHOULD be linked with the `derived_from` relation type.
 
