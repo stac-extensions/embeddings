@@ -87,7 +87,7 @@ The following types may be used as applicable `rel` types in the
 | Type | Description |
 | --- | --- |
 | emb:encoder_model | Link to the encoder model used to produce the embeddings. If available, this should point to a STAC MLM Item. |
-| emb:decoder_model | Link to a decoder model, if one exists. |
+| emb:decoder_model | Link to a decoder model to reconstruct the image from the embeddings, if one exists. If available, this should point to a STAC MLM Item. |
 | emb:benchmark | Link to benchmark/evaluation resources. |
 | emb:grid | Link to the grid/tiling definition used for chip embeddings. |
 | emb:quantization | Link to a document describing the quantization method. |
