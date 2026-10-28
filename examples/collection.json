@@ -44,12 +44,7 @@
       16,
       16
     ],
-    "grid_id": "major-tom-v1",
-    "grid_definition": {
-      "rel": "about",
-      "href": "https://example.org/grids/major-tom-v1.json",
-      "type": "application/json"
-    }
+    "grid_id": "major-tom-v1"
   },
   "emb:temporal_resolution": "single_acquisition",
   "emb:fit_for_use": [
@@ -71,16 +66,22 @@
       "href": "https://example.org/stac/collections/prithvi-s2l2a-chip-2024/items/tile-12txm-2024-05-01"
     },
     {
-      "rel": "emb:model",
+      "rel": "emb:encoder_model",
       "href": "https://example.org/stac/mlm-items/prithvi-v2",
       "type": "application/geo+json",
       "title": "Prithvi model card as STAC MLM Item"
     },
     {
-      "rel": "emb:source-data",
+      "rel": "derived_from",
       "href": "https://earth-search.aws.element84.com/v1/collections/sentinel-2-l2a",
       "type": "application/json",
       "title": "Sentinel-2 L2A source collection"
+    },
+    {
+      "rel": "emb:grid",
+      "href": "https://example.org/grids/major-tom-v1.json",
+      "type": "application/json",
+      "title": "Major TOM grid definition"
     }
   ],
   "sci:publications": [

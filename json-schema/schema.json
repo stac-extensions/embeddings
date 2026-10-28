@@ -55,57 +55,11 @@
             "type",
             "emb:type",
             "emb:dimensions",
-            "data_type",
-            "links"
+            "data_type"
           ],
           "properties": {
             "type": {
               "const": "Collection"
-            },
-            "links": {
-              "type": "array",
-              "allOf": [
-                {
-                  "contains": {
-                    "allOf": [
-                      {
-                        "$ref": "#/definitions/stac_link_object"
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "rel": {
-                            "const": "emb:model"
-                          }
-                        },
-                        "required": [
-                          "rel"
-                        ]
-                      }
-                    ]
-                  }
-                },
-                {
-                  "contains": {
-                    "allOf": [
-                      {
-                        "$ref": "#/definitions/stac_link_object"
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "rel": {
-                            "const": "emb:source-data"
-                          }
-                        },
-                        "required": [
-                          "rel"
-                        ]
-                      }
-                    ]
-                  }
-                }
-              ]
             },
             "assets": {
               "type": "object",
@@ -147,9 +101,6 @@
         }
       }
     },
-    "stac_link_object": {
-      "$ref": "https://schemas.stacspec.org/v1.0.0/item-spec/json-schema/item.json#/definitions/link"
-    },
     "processing_expression": {
       "$ref": "https://stac-extensions.github.io/processing/v1.2.0/schema.json#/definitions/fields/properties/processing:expression"
     },
@@ -187,9 +138,6 @@
         },
         "grid_id": {
           "type": "string"
-        },
-        "grid_definition": {
-          "$ref": "#/definitions/stac_link_object"
         }
       },
       "patternProperties": {
@@ -224,9 +172,6 @@
         },
         "quantized_dtype" : {
           "type": "string"
-        },
-        "link": {
-          "$ref": "#/definitions/stac_link_object"
         }
       },
       "additionalProperties": false

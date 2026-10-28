@@ -81,13 +81,7 @@
       ],
       "offset": [
         -1.2
-      ],
-      "link": {
-        "rel": "about",
-        "href": "https://example.org/docs/linear-quantization-method",
-        "type": "text/html",
-        "title": "Linear quantization method documentation"
-      }
+      ]
     }
   },
   "links": [
@@ -104,10 +98,16 @@
       "href": "https://example.org/stac/collections/prithvi-s2l2a-chip-2024"
     },
     {
-      "rel": "emb:source-data",
+      "rel": "derived_from",
       "href": "https://earth-search.aws.element84.com/v1/collections/sentinel-2-l2a/items/S2B_12TXM_20240501_0_L2A",
       "type": "application/geo+json",
       "title": "Source Sentinel-2 L2A scene"
+    },
+    {
+      "rel": "emb:quantization",
+      "href": "https://example.org/docs/linear-quantization-method",
+      "type": "text/html",
+      "title": "Linear quantization method documentation"
     }
   ],
   "assets": {

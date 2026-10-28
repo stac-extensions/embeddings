@@ -12,7 +12,7 @@ It describes the produced embeddings and run metadata and does not redefine STAC
 
 - Examples:
   - [Item example](examples/item.json): Item-level runtime and provenance metadata
-  - [Collection example](examples/collection.json): Collection-level embedding metadata and required embedding relation links
+  - [Collection example](examples/collection.json): Collection-level embedding metadata and relation links
 - [JSON Schema](json-schema/schema.json)
 - [Changelog](CHANGELOG.md)
 
@@ -54,8 +54,6 @@ The extension fields can be used in:
 - [x] Assets (for both Collections and Items, including `item_assets`)
 - [x] Links (extension-defined `rel` values)
 
-### Collection Fields
-
 | Field Name | Type | Description |
 | --- | --- | --- |
 | emb:type | string enum | **REQUIRED**. Embedding type: `pixel` or `chip`. |
@@ -67,30 +65,20 @@ The extension fields can be used in:
 | emb:fit_for_use | \[string] | Intended use cases (for example, `classification`, `change_detection`, `retrieval`). |
 | emb:uncertainty | [Uncertainty Object](#uncertainty-object) | Optional uncertainty metadata. |
 | sci:publications | \[object] | Publications related to the embedding model or dataset. Uses the [Scientific Extension](https://github.com/stac-extensions/scientific). |
-
-### Item Property Fields
-
-| Field Name | Type | Description |
-| --- | --- | --- |
 | emb:runtime_parameters | object | Runtime parameter values used during inference. |
 | processing:datetime | string (date-time) | Timestamp when the embeddings were generated. Uses the [Processing Extension](https://github.com/stac-extensions/processing). |
 | processing:version | string | Source processing baseline version. Uses the [Processing Extension](https://github.com/stac-extensions/processing). |
 | emb:preprocessing | [Processing Expression](https://github.com/stac-extensions/processing) | Preprocessing applied to source data before inference. Uses the STAC Processing extension expression format. |
 | emb:postprocessing | [Processing Expression](https://github.com/stac-extensions/processing) | Postprocessing applied to raw model output. Uses the STAC Processing extension expression format. |
-| emb:uncertainty | [Uncertainty Object](#uncertainty-object) | Optional uncertainty metadata. |
 | emb:quantization | [Quantization Object](#quantization-object) | Quantization details for encoded embeddings. |
 | emb:energy | [Energy Object](#energy-object) | Energy usage metadata from the embedding inference run. |
 
-Source imagery used to produce an item's embeddings SHOULD be referenced via a link with `rel: "emb:source-data"` in the item's `links` array (see [Relation Types](#relation-types)).
-
-### Asset Fields
+### Embeddings Asset
 
 Items **MUST** include an asset with the key `"embeddings"` in their `assets` object.
 This asset contains the actual embedding data (e.g., a GeoParquet file, COG, or Zarr store).
 Collections **SHOULD** define an `"embeddings"` entry in `item_assets` to describe the expected
 embedding asset for each item.
-
-No extension-specific fields are defined on assets.
 
 ### Chip Layout Object
 
@@ -99,8 +87,7 @@ No extension-specific fields are defined on assets.
 | layout_type | string enum | **REQUIRED**. One of `regular_grid`, `variable_grid`, `named_grid`. |
 | chip_size | \[integer] | Chip size in pixels as `[height, width]`. |
 | stride | \[integer] | Step between the origins of neighboring chips in pixels as `[row_stride, col_stride]`. When `stride < chip_size`, chips overlap; when `stride == chip_size`, chips tile without overlap. |
-| grid_id | string | Identifier of the tiling/grid system. |
-| grid_definition | Link Object | Link to grid/tiling definition. |
+| grid_id | string | Identifier of the tiling/grid system. A link to the grid definition can be provided with the `emb:grid` relation type. |
 
 ### Quantization Object
 
@@ -111,7 +98,6 @@ No extension-specific fields are defined on assets.
 | quantized_dtype | string | Data type after quantization. Uses the same [data type values](https://github.com/radiantearth/stac-spec/blob/master/commons/common-metadata.md#data-types) as `data_type`. |
 | scale | \[number] | Dequantization scale factor(s). |
 | offset | \[number] | Dequantization offset(s). |
-| link | [Link Object](https://github.com/radiantearth/stac-spec/blob/master/commons/links.md) | Link to a document describing the quantization method in detail. Recommended when the method cannot be fully captured by `scale` and `offset` alone. |
 
 ### Energy Object
 
@@ -138,14 +124,17 @@ in the item's or collection's `assets` object, rather than embedded as a link in
 
 ## Relation Types
 
-The following relation types should be used as applicable `rel` values in STAC Link Objects:
+The following relation types may be used as `rel` values in STAC Link Objects. None are required.
 
-| Type | Required | Description |
-| --- | --- | --- |
-| emb:model | Yes (Collection) | Link to the encoder model. If available, this should point to a STAC MLM Item. |
-| emb:source-data | Yes (Collection), No (Item) | Link to the source data collection (Collection) or specific source scene(s) (Item). |
-| emb:decoder | No | Link to a decoder model if one exists. |
-| emb:benchmark | No | Link to benchmark/evaluation resources. |
+| Type | Description |
+| --- | --- |
+| emb:encoder_model | Link to the encoder model used to produce the embeddings. If available, this should point to a STAC MLM Item. |
+| emb:decoder_model | Link to a decoder model, if one exists. |
+| emb:benchmark | Link to benchmark/evaluation resources. |
+| emb:grid | Link to the grid/tiling definition used for chip embeddings. |
+| emb:quantization | Link to a document describing the quantization method. |
+
+Source data used to produce the embeddings SHOULD be linked with the `derived_from` relation type.
 
 Paper and citation references SHOULD use the [Scientific Extension](https://github.com/stac-extensions/scientific)
 fields (`sci:doi`, `sci:citation`, `sci:publications`) instead of a custom link relation type.
